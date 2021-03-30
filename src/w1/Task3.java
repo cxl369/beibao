@@ -1,24 +1,30 @@
 package w1;
 
 import java.io.IOException;
+import java.util.Arrays;
 //任务3：能够对一组D{0-1}KP数据按项集第三项的价值:重量比进行非递增排序；
 public class Task3 {
 	public static void main(String[] args) throws IOException {
 		double value[]= {408,921,1329,11,998,1009,104,839,943,299,374,673,703,954,1657,425,950,1375,430,541,971,332,483,815,654,706,1360,956,992,1948};
 		double weight []= {508,1021,1321,111,1098,1196,204,939,1107,399,474,719,803,1054,1781,525,1050,1362,530,641,903,432,583,894,754,806,1241,1056,1092,1545};
-		quicksort(value,weight);
-	}
-	public static void quicksort(double[] value, double[] weight){
 		double[] rate = new double[value.length];
 		for(int i=0;i<value.length;i++){ 
 			double jiazhi = value[i]/weight[i];
 			rate[i] = jiazhi;
 		}
-		//
-		quick(rate, value, weight, 0, rate.length-1); //快速排序
+		//价值：重量比结果：
+		System.out.println("两个数组【价值】/【重量】的结果：");
 		for(int i=0;i<rate.length;i++) {
 			System.out.println(rate[i]);
 		}
+		quick(rate, value, weight, 0, rate.length-1); //快速排序
+		//价值：重量比进行非递增排序：
+		System.out.println("【价值】/【重量】进行非递增排序:");
+		for(int i=0;i<rate.length;i++) {
+			System.out.println(rate[i]);
+		}
+		System.out.println("使用数组输出快速排序之后的结果");
+		System.out.println(Arrays.toString(rate));
 	}
 	private static void quick(double[] rate, double[] value, double[] weight, int beg, int end){
 		if(beg<end){
@@ -31,14 +37,16 @@ public class Task3 {
 		int pivot = end;
 		int index = beg;
 		for(int i=beg;i<=end;i++){
-			if(rate[i]<rate[pivot]){
+			if(rate[i]>rate[pivot]){
 				double temp = rate[i];
 				rate[i] = rate[index];
 				rate[index] = temp;
 				temp = value[i];
+				
 				value[i] = value[index];
 				value[index] = temp;
 				temp = weight[i];
+				
 				weight[i] = weight[index];
 				weight[index] = temp;
 				index ++;

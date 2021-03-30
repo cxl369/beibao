@@ -6,12 +6,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.*;
 
 //JFrame是构造一个初始时不可见的新窗体（绘制散点图）
-public class Task2 extends JPanel {
+public class Task5 extends JPanel {
 	//主函数
 	public static void main(String[] args) throws IOException {
 		//文件读取部分
@@ -55,6 +56,80 @@ public class Task2 extends JPanel {
 		dd.setLocation(200,200);//离显示屏上边缘200像素，里显示屏左边缘200像素
 		dd.add(new Task2());//操作
 
+		//
+		double value[]= {408,921,1329,11,998,1009,104,839,943,299,374,673,703,954,1657,425,950,1375,430,541,971,332,483,815,654,706,1360,956,992,1948};
+		double weight []= {508,1021,1321,111,1098,1196,204,939,1107,399,474,719,803,1054,1781,525,1050,1362,530,641,903,432,583,894,754,806,1241,1056,1092,1545};
+		double[] rate = new double[value.length];
+		for(int i=0;i<value.length;i++){ 
+			double jiazhi = value[i]/weight[i];
+			rate[i] = jiazhi;
+		}
+		//价值：重量比结果：
+		System.out.println("两个数组【价值】/【重量】的结果：");
+		for(int i=0;i<rate.length;i++) {
+			System.out.println(rate[i]);
+		}
+		quick(rate, value, weight, 0, rate.length-1); //快速排序
+		//价值：重量比进行非递增排序：
+		System.out.println("【价值】/【重量】进行非递增排序:");
+		for(int i=0;i<rate.length;i++) {
+			System.out.println(rate[i]);
+		}
+		System.out.println("使用数组输出快速排序之后的结果");
+		System.out.println(Arrays.toString(rate));
+		//
+		//利用动态规划算法解决0-1背包问题
+		int value1[]= {408,921,1329,11,998,1009,104,839,943,299,374,673,703,954,1657,425,950,1375,430,541,971,332,483,815,654,706,1360,956,992,1948};
+		int weight1 []= {508,1021,1321,111,1098,1196,204,939,1107,399,474,719,803,1054,1781,525,1050,1362,530,641,903,432,583,894,754,806,1241,1056,1092,1545};
+		int w = 10149;//表示背包的最大承重
+		int n = weight1.length;//表示物品的个数
+		int[][] maxVal = new int[n + 1][w + 1];//v[i][j]表示在前i个物品中能够装入容量为j的背包中的最大价值
+		int[][] mark = new int[n + 1][w + 1];//记录哪个物品被放进背包
+		int c=0;//记录背包里的物品
+		//初始化条件
+		for (int i = 0; i < w + 1; i++) {
+			maxVal[0][i] = 0;
+		}
+		for (int i = 0; i < n + 1; i++) {
+			maxVal[i][0] = 0;
+		}
+
+		//动态规划
+
+		for (int i = 1; i < maxVal.length; i++) {
+			for (int j = 1; j < maxVal[i].length; j++) {
+				if (weight1[i - 1] > j) {
+					//如果第i-1个物品(因为i从1开始)的重量小于当前背包重量
+					maxVal[i][j] = maxVal[i - 1][j];
+				} else {
+					if (maxVal[i - 1][j] < value[i - 1] + maxVal[i - 1][j - weight1[i - 1]]) {
+						//如果上一次规划的最大价值小于当前物品的价值和上一次规划的重量减去当前物品重量的价值总和。
+						maxVal[i][j] = value1[i - 1] + maxVal[i - 1][j - weight1[i - 1]];
+						mark[i][j] = 1;//记录
+					} else {
+						maxVal[i][j] = maxVal[i - 1][j];
+					}
+				}
+			}
+		}
+		//查看二维数组
+		for (int[] arr : maxVal) {
+			System.out.println(Arrays.toString(arr));
+		}
+		//列出最终方案
+		int i = mark.length - 1;
+		int j = mark[0].length - 1;
+		for(c=0;c<3;c--) {
+			while (i > 0 && j > 0) {
+				if (mark[i][j] == 1) {
+					System.out.println("第" + i + "个商品放入了背包");
+					j -= weight[i - 1];
+				}
+				i--;
+			}
+		}
+		
+		
 		long end = System.currentTimeMillis();//程序的结束时间
 		System.out.println( "总共花费：" + (end - start)+ "ms" );//计算花费的时间，此处时间为ms
 	}
@@ -129,5 +204,42 @@ public class Task2 extends JPanel {
 				max = shuju[i];
 		}
 		return max;
+	}
+	private static void quick(double[] rate, double[] value, double[] weight, int beg, int end){
+		if(beg<end){
+			int pivot = partition(rate, value, weight, beg, end);
+			quick(rate, value, weight, beg, pivot-1);//快速排序算法
+			quick(rate, value, weight, pivot+1, end);
+		}
+	}
+	private static int partition(double[] rate, double[] value, double[] weight, int beg, int end){
+		int pivot = end;
+		int index = beg;
+		for(int i=beg;i<=end;i++){
+			if(rate[i]>rate[pivot]){
+				double temp = rate[i];
+				rate[i] = rate[index];
+				rate[index] = temp;
+				temp = value[i];
+				
+				value[i] = value[index];
+				value[index] = temp;
+				temp = weight[i];
+				
+				weight[i] = weight[index];
+				weight[index] = temp;
+				index ++;
+			}
+		}
+		double temp = rate[index];
+		rate[index] = rate[pivot];
+		rate[pivot] = temp;
+		temp = value[index];
+		value[index] = value[pivot];
+		value[pivot] = temp;
+		temp = weight[index];
+		weight[index] = weight[pivot];
+		weight[pivot] = temp;
+		return index;
 	}
 }

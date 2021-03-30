@@ -1,13 +1,17 @@
 package w1;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.Scanner;
 //任务4：用户能够自主选择动态规划算法、回溯算法求解指定D{0-1} KP数据的最优解和求解时间（以秒为单位）；
 public class Task4 { 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {		
 		long timeStart = System.currentTimeMillis();
 		File file = new File( "C:\\Users\\Administrator\\eclipse-workspace\\work02\\src\\txts\\idkp1-10.txt" ); //文件路径
 		FileReader fileReader = new FileReader(file);
