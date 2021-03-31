@@ -59,11 +59,11 @@ public class Task3 {
 		for(int i=0;i<rate.length;i++) {
 			System.out.println(rate[i]);
 		}
-		System.out.println("使用数组输出快速排序之后的结果");
+		System.out.println("使用数组输出快速排序之后的结果:");
 		System.out.println(Arrays.toString(rate));//将排序之后的结果以数组的方式列出
 	}
 	//快速排序具体的过程
-	public static void quick(double[] rate, double[] value, double[] weight, int sta, int end){
+	public static void quick(double rate[], double value[], double weight[], int sta, int end){
 		if(sta<end){
 			int cent = partition(rate, value, weight, sta, end);//在数组中的中心位置的点：cent
 			quick(rate, value, weight, sta, cent-1);//对数组中的前半部分进行排序
@@ -71,7 +71,7 @@ public class Task3 {
 		}
 	}
 	//快速排序交换过程
-	public static int partition(double[] rate, double[] value, double[] weight, int sta, int end){
+	public static int partition(double rate[], double value[], double weight[], int sta, int end){
 		double temp ;
 		for(int i=sta;i<=end;i++){
 			if(rate[i]>rate[end]){
