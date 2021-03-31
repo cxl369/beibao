@@ -76,7 +76,7 @@ public class Task4 {
 				}
 			}
 		}
-		//查看二维数组
+		//过程
 		for (int arr[] : mvaluel) {
 			System.out.println(Arrays.toString(arr));
 		}
