@@ -86,41 +86,42 @@ public class Task2 extends JPanel {
 
 		// 绘制纵坐标
 		g2.draw(new Line2D.Double(ctd, ctd, ctd, h-ctd));//纵坐标：线
-//				g2.draw(new Line2D.Double(ctd, h-ctd, ctd+5, h-ctd+5));//纵坐标：箭头
-//				g2.draw(new Line2D.Double(ctd, h-ctd, ctd-5, h-ctd+5));//纵坐标：箭头
+		g2.draw(new Line2D.Double(ctd, h-ctd, ctd+5, h-ctd+5));//纵坐标：箭头
+		g2.draw(new Line2D.Double(ctd, h-ctd, ctd-5, h-ctd+5));//纵坐标：箭头
 
 		//x轴坐标
 		final int ZL = 50;
-		//for循环绘制坐标轴
+		//for循环绘制横坐标的坐标轴
 		for (int i = ctd, j = 0; i <  w-ctd; i +=ZL, j +=ZL) {
 			g.drawString(" " + j, i - 10, ctd - 10+h);
 		}
-		
+
 		g.drawString("重量", w-ctd-5-10, h-ctd-5);
 
 		//y轴坐标
-		final int PRESS_INTERVAL = 30;
-		for (int i =h-ctd, j = 0; i > h-ctd; i -= PRESS_INTERVAL, j += ZL) {
+		final int ZZ = 30;
+		//for循环绘制纵坐标的坐标轴
+		for (int i =h-ctd, j = 0; i > h-ctd; i -= ZZ, j += ZL) {
 			g.drawString(j + " ", h-ctd+100 , i + 3+10);
 		}
 		g.drawString("价值", ctd - 5, ctd - 5);
-		
+
 		double han = (double)(w - 2*ctd)/(shuju.length-1);
 		double gui= (double)(h - 2*ctd)/getMax();
 		System.out.println("以下遍历每个点的横纵坐标：");
 		// 散点的设置
-		g2.setPaint(Color.blue);//设置颜色
+		g2.setPaint(Color.blue);//设置散点的颜色
 		for(int i = 0; i < shuju.length; i++) {
 			double x = ctd + i*han;
 			double y = h - ctd - gui*shuju[i];
 			g2.fill(new Ellipse2D.Double(x-2, y-2, 4, 4));
-			Label xy=new Label();
-//			xy.fill = "x="+x+", y="+y;
+			Label xy=new Label();//在图象上显示坐标
+			//			xy.fill = "x="+x+", y="+y;
 			System.out.print("(");
 			System.out.print(x);
 			System.out.print(",");
 			System.out.print(y);
-			System.out.println(")");
+			System.out.println(")");//在控制台上输出散点的坐标
 		}
 	}
 
