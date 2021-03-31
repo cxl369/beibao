@@ -61,19 +61,14 @@ public class Task2 extends JPanel {
 
 	//定义数组：分别表示重量和价值
 	int[] shuju = {
-
-			408,508,921,1021,1329,1321,116,111,998,1098,
-			1046,1196,829,704,943,729,1107,374,399,673,774,
-			703,719,954,803,1657,1554,1425,1781,950,825,
-			1375,1050,430,1362,541,530,971,641,332,903,483,432,
-			815,894,654,754,706,806,1360,1241,956,1056,992,1092,1948,1545,228,328,
-			435,535,663,535,575,579,687,685
+			408,508,921,1021,1329,1021,11,998,1009,104,839,943,299,374,673,703,954,1657,425,950,1375,430,541,971,332,483,815,654,706,1360,956,992,1948,
+			1321,111,1098,1196,204,939,1107,399,474,719,803,1054,1781,525,1050,1362,530,641,903,432,583,894,754,806,1241,1056,1092,1545,
 	};
 	int ctd=10 ;
 
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
-		//颜色
+		//设置颜色
 		Color c = new Color(200, 70, 0);//设置坐标轴的颜色：红色
 		g.setColor(c);
 		super.paintComponent(g);
@@ -90,20 +85,22 @@ public class Task2 extends JPanel {
 		g2.draw(new Line2D.Double(w-ctd, h-ctd, w-ctd-5, h-ctd+5));//横坐标：箭头
 
 		// 绘制纵坐标
-		g2.draw(new Line2D.Double(ctd, ctd, ctd, h-ctd));//纵坐标;线
-//				g2.draw(new Line2D.Double(ctd, h-ctd, ctd+5, h-ctd+5));
-//				g2.draw(new Line2D.Double(ctd, h-ctd, ctd-5, h-ctd+5));
+		g2.draw(new Line2D.Double(ctd, ctd, ctd, h-ctd));//纵坐标：线
+//				g2.draw(new Line2D.Double(ctd, h-ctd, ctd+5, h-ctd+5));//纵坐标：箭头
+//				g2.draw(new Line2D.Double(ctd, h-ctd, ctd-5, h-ctd+5));//纵坐标：箭头
 
 		//x轴坐标
-		final int TIME_INTERVAL = 50;
-		for (int i = ctd, j = 0; i <  w-ctd; i += TIME_INTERVAL, j += TIME_INTERVAL) {
+		final int ZL = 50;
+		//for循环绘制坐标轴
+		for (int i = ctd, j = 0; i <  w-ctd; i +=ZL, j +=ZL) {
 			g.drawString(" " + j, i - 10, ctd - 10+h);
 		}
+		
 		g.drawString("重量", w-ctd-5-10, h-ctd-5);
 
 		//y轴坐标
 		final int PRESS_INTERVAL = 30;
-		for (int i =h-ctd, j = 0; i > h-ctd; i -= PRESS_INTERVAL, j += TIME_INTERVAL) {
+		for (int i =h-ctd, j = 0; i > h-ctd; i -= PRESS_INTERVAL, j += ZL) {
 			g.drawString(j + " ", h-ctd+100 , i + 3+10);
 		}
 		g.drawString("价值", ctd - 5, ctd - 5);
